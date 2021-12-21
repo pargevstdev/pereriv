@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lets պերերիվ</title>
+</head>
+<style>
+    ul li{
+        padding: 5px;
+    }
+    .links li{
+        display: inline-block;
+    }
+</style>
+<body>
+Welcome to Lets պերերիվ
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<ul class="links">
+    <li><a href="/add-product-links/">Add Products</a></li> >>
+    <li><a href="/get-random-host/">See/register today's host</a></li> >>
+    <li><a href="/all-orders/">See All links</a></li> >>
+    <li><a href="/">Register</a></li>
+</ul>
+
+{% block content %}{% endblock %}
+
+</body>
+</html>

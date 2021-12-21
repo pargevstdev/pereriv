@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    table, tr, td{
+        border: 1px solid black;
+    }
+    table{
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+</style>
+
+<table>
+    <tr>
+        <th>User</th>
+        <th>Products</th>
+    </tr>
+    {% for d in data %}
+    <tr>
+        <td width="20%">{{ d.user.name|escape }} {{ d.user.surname|escape }}</td>
+        <td width="80%">
+            <ul>
+                {% for link in d.products %}
+                    <li>
+                        <a href="{{ link.link|escape }}">{{ link.link|escape }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
