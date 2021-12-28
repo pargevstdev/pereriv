@@ -2,36 +2,47 @@
 
 {% block content %}
 
-<style>
-    table, tr, td{
-        border: 1px solid black;
-    }
-    table{
-        border-collapse: collapse;
-        width: 100%;
-    }
+    <style>
+        table, tr, td {
+            border: 1px solid black;
+        }
 
-</style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-<table>
-    <tr>
-        <th>User</th>
-        <th>Products</th>
-    </tr>
-    {% for d in data %}
-    <tr>
-        <td width="20%">{{ d.user.name|escape }} {{ d.user.surname|escape }}</td>
-        <td width="80%">
-            <ul>
-                {% for link in d.products %}
-                    <li>
-                        <a href="{{ link.link|escape }}">{{ link.link|escape }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+    </style>
+
+    <table>
+        <tr>
+            <th width="20%">User</th>
+            <th width="60%">Products</th>
+            <th width="20%">Price</th>
+        </tr>
+        {% for d in data %}
+            <tr>
+                <td width="20%">{{ d.user.name|escape }} {{ d.user.surname|escape }}</td>
+                <td width="60%">
+                    <ul>
+                        {% for link in d.products %}
+                            <li>
+                                <a href="{{ link.link|escape }}" target="_blank">{{ link.link|escape }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td width="20%">
+                    <ul>
+                        {% for price in d.products %}
+                            <li>
+                               {{ price.price|escape }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
 
 {% endblock %}
