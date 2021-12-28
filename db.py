@@ -1,6 +1,6 @@
 # Importing MySql Modules and config Modules
 from mysql.connector import MySQLConnection, Error
-db_config = {'host':'127.0.0.1','database':'pereriv','user':'root','password':'root','port':'3306'}
+db_config = {'host':'127.0.0.1','database':'pereriv','user':'arman','password':'root','port':'3306'}
 
 
 # return Row(s) with a cetain criteria or None if  do/does not exist

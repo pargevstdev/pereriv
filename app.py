@@ -8,12 +8,14 @@ from db import insert_into_many
 from db_services import get_row, insert_many_update_dups, insert_table, delete_row, get_rows, get_data, \
     get_data_where_not_in
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='',
+            static_folder='static',
+            template_folder='templates')
 csrf = CSRFProtect(app)
 
 app.config['SECRET_KEY'] = "asdasdsadsd6262{QWEQ{WEW{E1d32as1d5sa1d2a4d"
 
-DEADLINE = 11
+DEADLINE = 13
 
 
 @app.before_request
@@ -75,15 +77,22 @@ def save_links():
     delete_row("users_products", "user_id", g.user['id'])
 
     links = request.form.getlist('link')
+    price = request.form.getlist('price')
 
-    if not any(links):
-        flash("Enter links")
+    if not any(links) or not any(price):
+        flash("Enter links or price")
         return redirect("/add-product-links/")
 
-    users_links = [{"user_id": g.user["id"], "link": link, "created": datetime.datetime.now()} for link in links if link]
-
+    users_links = []
+    for index, item in enumerate(links):
+        users_links.append(
+            {"user_id": g.user["id"],
+             "link": item,
+             "price": price[index],
+             "created": datetime.datetime.now()
+             }
+        )
     insert_into_many("users_products", users_links)
-
     return redirect("/add-product-links/")
 
 
