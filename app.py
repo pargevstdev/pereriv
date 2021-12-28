@@ -109,7 +109,7 @@ def get_random_host():
 
     already_hosts = [user["user_id"] for user in get_rows("SELECT user_id FROM host", None) or []]
 
-    participants = get_data_where_not_in("participants", "user_id", already_hosts)
+    participants = get_data_where_not_in("participants", "user_id", already_hosts, additional_condition={"created": datetime.date.today()})
 
     if not participants:
         # in case all have already ordered
