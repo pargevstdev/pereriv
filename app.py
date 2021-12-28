@@ -15,7 +15,7 @@ csrf = CSRFProtect(app)
 
 app.config['SECRET_KEY'] = "asdasdsadsd6262{QWEQ{WEW{E1d32as1d5sa1d2a4d"
 
-DEADLINE = 13
+DEADLINE = 11
 
 
 @app.before_request
@@ -79,7 +79,7 @@ def save_links():
     links = request.form.getlist('link')
     price = request.form.getlist('price')
 
-    if not any(links) or not any(price):
+    if not all(links) or not all(price):
         flash("Enter links or price")
         return redirect("/add-product-links/")
 
@@ -88,7 +88,7 @@ def save_links():
         users_links.append(
             {"user_id": g.user["id"],
              "link": item,
-             "price": price[index],
+             "price": int(price[index]),
              "created": datetime.datetime.now()
              }
         )
