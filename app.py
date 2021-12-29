@@ -74,26 +74,32 @@ def participants():
 
 @app.route("/save-product-links/", methods=['POST'])
 def save_links():
-    delete_row("users_products", "user_id", g.user['id'])
+    try:
+        delete_row("users_products", "user_id", g.user['id'])
 
-    links = request.form.getlist('link')
-    price = request.form.getlist('price')
+        links = request.form.getlist('link')
+        price = request.form.getlist('price')
 
-    if not all(links) or not all(price):
-        flash("Enter links or price")
+        if not all(links) or not all(price):
+            flash("Enter links or price")
+            return redirect("/add-product-links/")
+
+        users_links = []
+        for index, item in enumerate(links):
+            print(price[index])
+            print(item)
+            users_links.append(
+                {"user_id": g.user["id"],
+                 "link": item,
+                 "price": int(price[index]),
+                 "created": datetime.datetime.now()
+                 }
+            )
+        insert_into_many("users_products", users_links)
         return redirect("/add-product-links/")
-
-    users_links = []
-    for index, item in enumerate(links):
-        users_links.append(
-            {"user_id": g.user["id"],
-             "link": item,
-             "price": int(price[index]),
-             "created": datetime.datetime.now()
-             }
-        )
-    insert_into_many("users_products", users_links)
-    return redirect("/add-product-links/")
+    except:
+        flash("You are doing something wrong 🤯")
+        return redirect("/add-product-links/")
 
 
 @app.route("/get-random-host/", methods=['GET'])
@@ -109,7 +115,8 @@ def get_random_host():
 
     already_hosts = [user["user_id"] for user in get_rows("SELECT user_id FROM host", None) or []]
 
-    participants = get_data_where_not_in("participants", "user_id", already_hosts, additional_condition={"created": datetime.date.today()})
+    participants = get_data_where_not_in("participants", "user_id", already_hosts,
+                                         additional_condition={"created": datetime.date.today()})
 
     if not participants:
         # in case all have already ordered

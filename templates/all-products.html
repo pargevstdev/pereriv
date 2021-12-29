@@ -1,48 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    <style>
-        table, tr, td {
-            border: 1px solid black;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-    </style>
-
-    <table>
-        <tr>
-            <th width="20%">User</th>
-            <th width="60%">Products</th>
-            <th width="20%">Price</th>
-        </tr>
-        {% for d in data %}
+    <div class="table-responsive">
+        <table class="table thead-dark">
+            <thead>
             <tr>
-                <td width="20%">{{ d.user.name|escape }} {{ d.user.surname|escape }}</td>
-                <td width="60%">
-                    <ul>
-                        {% for link in d.products %}
-                            <li>
-                                <a href="{{ link.link|escape }}" target="_blank">{{ link.link|escape }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </td>
-                <td width="20%">
-                    <ul>
-                        {% for price in d.products %}
-                            <li>
-                               {{ price.price|escape }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </td>
+                <th>User</th>
+                <th>Products</th>
+                <th>Price</th>
             </tr>
-        {% endfor %}
-    </table>
+            </thead>
+            <tbody>
+            {% for d in data %}
+                <tr>
+                    <td>{{ d.user.name|escape }} {{ d.user.surname|escape }}</td>
+                    <td>
+                        <ul>
+                            {% for link in d.products %}
+                                <li>
+                                    <a href="{{ link.link|escape }}" target="_blank">{{ link.link|escape }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            {% for price in d.products %}
+                                <li>
+                                    {{ price.price|escape }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tbody>
+        </table>
+    </div>
 
 {% endblock %}

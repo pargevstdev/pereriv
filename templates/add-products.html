@@ -7,7 +7,7 @@
     {% for link in links %}
         <div class="par">
             <input style="width: 80%; height: 26px" type="text" name="link" value="{{ link.link|escape }}" placeholder="Enter your link ..." required>
-            <input style="width: 80%; height: 26px" type="text" name="price" value="{{ link.price|escape }}" placeholder="Enter your link product price" required>
+            <input style="width: 80%; height: 26px" type="number" name="price" value="{{ link.price|escape }}" placeholder="Enter your link product price" required>
             <button class="del" type="button" style="background-color: red; color: white; width: 30px; height: 30px">X</button>
         </div>
         <br>
@@ -33,7 +33,7 @@
         $("form").append(`
             <div class="par">
                 <input style="width: 80%; height: 26px" type="text" name="link" placeholder="Enter your link ..." required>
-                <input style="width: 80%; height: 26px" type="text" name="price" placeholder="Enter your link product price" required>
+                <input style="width: 80%; height: 26px" type="number" min="0" step="1" name="price" placeholder="Enter your link product price" required>
                 <button class="del" type="button" style="background-color: red; color: white; width: 30px; height: 30px">X</button>
             </div>
         <br><br>
