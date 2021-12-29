@@ -86,8 +86,6 @@ def save_links():
 
         users_links = []
         for index, item in enumerate(links):
-            print(price[index])
-            print(item)
             users_links.append(
                 {"user_id": g.user["id"],
                  "link": item,
